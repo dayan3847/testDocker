@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  mysql:
+    image: mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+      MYSQL_RANDOM_ROOT_PASSWORD: ${DB_ROOT_PASS}
+      TZ: "$TZ"
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+    networks:
+      app:
+        ipv4_address: "192.168.1.100"
+
+networks:
+  app:
+    ipam:
+      driver: default
+      config:
+        - subnet: "192.168.1.0/24"
